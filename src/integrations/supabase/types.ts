@@ -14,7 +14,102 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_name: string
+          id: string
+          metadata: Json
+          path: string | null
+          referrer: string | null
+          session_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_name: string
+          id?: string
+          metadata?: Json
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_name?: string
+          id?: string
+          metadata?: Json
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+        }
+        Relationships: []
+      }
+      learning_paths: {
+        Row: {
+          content: Json
+          created_at: string
+          email: string | null
+          goal: string
+          id: string
+          level: string | null
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          email?: string | null
+          goal: string
+          id?: string
+          level?: string | null
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          email?: string | null
+          goal?: string
+          id?: string
+          level?: string | null
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          amount_cents: number | null
+          created_at: string
+          currency: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          provider_reference: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          created_at?: string
+          currency?: string | null
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          provider_reference?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number | null
+          created_at?: string
+          currency?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          provider_reference?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

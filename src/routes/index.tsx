@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -20,6 +21,9 @@ import heroImage from "@/assets/ai-workshop-hero.jpg";
 import speakerImage from "@/assets/ai-educator.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LearningPathPlanner } from "@/components/LearningPathPlanner";
+import { trackEvent } from "@/lib/analytics";
+import { submitRegistration } from "@/lib/marketing.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,17 +79,43 @@ const benefits = [
   },
 ];
 
-function scrollToRegistration() {
+function scrollToRegistration(source: string) {
+  void trackEvent("cta_click", { source });
   document.getElementById("dang-ky")?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function Index() {
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const register = useServerFn(submitRegistration);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    void trackEvent("page_view");
+  }, []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const form = new FormData(event.currentTarget);
+    setSaving(true);
+    setFormError(null);
+    try {
+      await register({
+        data: {
+          fullName: String(form.get("name") ?? ""),
+          email: String(form.get("email") ?? ""),
+          phone: String(form.get("phone") ?? ""),
+        },
+      });
+      void trackEvent("registration_submitted");
+      setSubmitted(true);
+    } catch {
+      setFormError("Chưa gửi được thông tin. Bạn vui lòng kiểm tra lại và thử lần nữa.");
+    } finally {
+      setSaving(false);
+    }
   }
+
 
   return (
     <main className="min-h-screen overflow-hidden bg-background pb-20 text-foreground sm:pb-0">
@@ -134,7 +164,7 @@ function Index() {
           <p className="mt-8 text-sm text-muted-foreground sm:text-base">
             Bạn muốn tiếp tục tự làm mọi thứ, hay bắt đầu xây hệ thống cho riêng mình?
           </p>
-          <Button className="mt-5" variant="conversion" size="xl" onClick={scrollToRegistration}>
+          <Button className="mt-5" variant="conversion" size="xl" onClick={() => scrollToRegistration("hero")}>
             Giữ chỗ & nhận bộ tài nguyên <ArrowRight aria-hidden="true" />
           </Button>
           <p className="mt-3 text-xs text-muted-foreground">Số lượng giới hạn để đảm bảo chất lượng hướng dẫn</p>
@@ -223,7 +253,7 @@ function Index() {
               <span className="section-kicker">Xem trước nội dung</span>
               <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">Bắt đầu từ một quy trình có thể nhìn thấy</h2>
               <p className="mt-4 leading-7 text-muted-foreground">Xem cách tư duy hệ thống giúp bạn phân vai, giao việc và kiểm soát chất lượng đầu ra của AI.</p>
-              <Button className="mt-6" variant="conversion" size="xl" onClick={scrollToRegistration}>Đăng ký ngay <ArrowRight /></Button>
+              <Button className="mt-6" variant="conversion" size="xl" onClick={() => scrollToRegistration("video")}>Đăng ký ngay <ArrowRight /></Button>
             </div>
             <div className="relative overflow-hidden rounded-lg border border-border bg-ink shadow-soft">
               <div className="aspect-video">
@@ -243,6 +273,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <LearningPathPlanner />
 
       <section id="dang-ky" className="registration-band scroll-mt-8 px-5 py-16 sm:py-24">
         <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_26rem] lg:items-center">
@@ -272,7 +304,8 @@ function Index() {
                 <Input id="email" name="email" type="email" required autoComplete="email" className="mt-2 h-11" placeholder="ban@email.com" />
                 <label className="mt-4 block text-sm font-semibold" htmlFor="phone">Số điện thoại</label>
                 <Input id="phone" name="phone" type="tel" required autoComplete="tel" className="mt-2 h-11" placeholder="09xx xxx xxx" />
-                <Button type="submit" variant="conversion" size="xl" className="mt-6 w-full">Nhận vé tham dự <ArrowRight /></Button>
+                <Button type="submit" variant="conversion" size="xl" className="mt-6 w-full" disabled={saving}>{saving ? "Đang gửi..." : "Nhận vé tham dự"} <ArrowRight /></Button>
+                {formError ? <p className="mt-3 text-sm font-medium text-destructive" role="alert">{formError}</p> : null}
                 <p className="mt-4 text-center text-[11px] leading-5 text-muted-foreground">Thông tin của bạn chỉ được dùng để gửi nội dung workshop.</p>
               </form>
             )}
@@ -285,7 +318,7 @@ function Index() {
       </footer>
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-card/95 p-3 backdrop-blur-sm sm:hidden">
-        <Button className="w-full" variant="conversion" size="xl" onClick={scrollToRegistration}>Giữ chỗ miễn phí <ArrowRight /></Button>
+        <Button className="w-full" variant="conversion" size="xl" onClick={() => scrollToRegistration("mobile_bar")}>Giữ chỗ miễn phí <ArrowRight /></Button>
       </div>
     </main>
   );
