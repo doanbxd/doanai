@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -20,6 +21,9 @@ import heroImage from "@/assets/ai-workshop-hero.jpg";
 import speakerImage from "@/assets/ai-educator.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LearningPathPlanner } from "@/components/LearningPathPlanner";
+import { trackEvent } from "@/lib/analytics";
+import { submitRegistration } from "@/lib/marketing.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
