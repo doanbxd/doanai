@@ -17,8 +17,8 @@ import {
   Users,
 } from "lucide-react";
 
-import heroImage from "@/assets/ai-workshop-hero.jpg";
-import speakerImage from "@/assets/ai-educator.jpg";
+import heroImage from "@/assets/anh-bia-workshop-ai.png.asset.json";
+import speakerImage from "@/assets/dien-gia-phong-menly.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LearningPathPlanner } from "@/components/LearningPathPlanner";
@@ -79,6 +79,8 @@ const benefits = [
   },
 ];
 
+const petals = Array.from({ length: 18 }, (_, index) => index);
+
 function scrollToRegistration(source: string) {
   void trackEvent("cta_click", { source });
   document.getElementById("dang-ky")?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -119,13 +121,17 @@ function Index() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-background pb-20 text-foreground sm:pb-0">
-      <section className="hero-wash px-5 pb-14 pt-9 sm:pb-20 sm:pt-14">
-        <div className="mx-auto max-w-5xl text-center">
+      <div className="petal-scene" aria-hidden="true">
+        {petals.map((petal) => <span className="petal" key={petal} />)}
+      </div>
+
+      <section className="hero-wash relative px-5 pb-14 pt-9 sm:pb-20 sm:pt-14">
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
           <div className="animate-rise inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary-soft px-4 py-2 text-[11px] font-bold uppercase text-primary sm:text-xs">
             <span className="size-1.5 rounded-full bg-primary" />
             Workshop thực chiến một lần duy nhất
           </div>
-          <h1 className="animate-rise mt-6 text-4xl font-extrabold leading-[1.08] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display animate-rise mt-6 text-4xl font-bold uppercase leading-[1.08] sm:text-6xl lg:text-7xl">
             XÂY ĐỘI AI AGENT
             <br />
             <span className="text-primary">LÀM VIỆC THAY BẠN 24/7</span>
@@ -140,16 +146,18 @@ function Index() {
 
           <div className="hero-frame animate-rise relative mx-auto mt-8 overflow-hidden rounded-lg border-2 border-primary bg-ink shadow-glow">
             <img
-              src={heroImage}
-              width={1536}
-              height={864}
-              alt="Không gian làm việc AI với hệ thống nhiều agent trên màn hình"
-              className="aspect-video w-full object-cover"
+              src={heroImage.url}
+              width={768}
+              height={952}
+              alt="Chuyên gia AI làm việc trong văn phòng chuyên nghiệp"
+              className="aspect-[4/5] w-full object-cover object-center sm:aspect-[16/9] sm:object-[center_38%]"
             />
-            <div className="absolute inset-y-0 left-0 flex w-[54%] items-center bg-gradient-to-r from-ink via-ink/90 to-transparent p-6 text-left sm:p-10 lg:p-14">
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/10" />
+            <div className="absolute inset-y-0 left-0 flex w-[72%] items-end p-6 text-left sm:w-[52%] sm:items-center sm:p-10 lg:p-14">
               <div>
                 <span className="text-xs font-bold uppercase text-primary sm:text-sm">AI Agent thực chiến</span>
-                <p className="mt-2 text-2xl font-extrabold leading-tight text-ink-foreground sm:text-4xl lg:text-5xl">
+                <p className="font-display mt-2 text-3xl font-bold uppercase leading-tight text-ink-foreground sm:text-5xl lg:text-6xl">
                   Giao việc một lần.
                   <br />
                   Hệ thống tự vận hành.
@@ -183,7 +191,7 @@ function Index() {
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
             <span className="section-kicker">Giá trị mang về</span>
-            <h2 id="benefit-title" className="mt-3 text-3xl font-extrabold sm:text-5xl">
+            <h2 id="benefit-title" className="font-display mt-3 text-4xl font-bold uppercase sm:text-6xl">
               Một buổi học, <span className="text-primary">sáu bước tiến</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
@@ -216,18 +224,18 @@ function Index() {
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
             <span className="section-kicker">Người đồng hành</span>
-            <h2 id="speaker-title" className="mt-3 text-3xl font-extrabold sm:text-5xl">Diễn giả workshop</h2>
+             <h2 id="speaker-title" className="font-display mt-3 text-4xl font-bold uppercase sm:text-6xl">Diễn giả workshop</h2>
           </div>
           <div className="mt-10 grid items-center gap-8 border-y border-border py-10 md:grid-cols-[18rem_1fr] md:gap-12">
             <div className="relative mx-auto">
               <div className="absolute -inset-3 rounded-full border border-primary/25" />
               <img
-                src={speakerImage}
-                width={816}
-                height={816}
+                src={speakerImage.url}
+                width={768}
+                height={1152}
                 loading="lazy"
                 alt="Diễn giả Minh An"
-                className="relative aspect-square w-52 rounded-full object-cover shadow-soft md:w-64"
+                className="relative aspect-square w-52 rounded-full object-cover object-[center_25%] shadow-soft md:w-64"
               />
               <span className="absolute bottom-2 right-0 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">AI BUILDER</span>
             </div>
@@ -251,7 +259,7 @@ function Index() {
           <div className="mt-16 grid items-center gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
               <span className="section-kicker">Xem trước nội dung</span>
-              <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">Bắt đầu từ một quy trình có thể nhìn thấy</h2>
+               <h2 className="font-display mt-3 text-4xl font-bold uppercase sm:text-5xl">Bắt đầu từ một quy trình có thể nhìn thấy</h2>
               <p className="mt-4 leading-7 text-muted-foreground">Xem cách tư duy hệ thống giúp bạn phân vai, giao việc và kiểm soát chất lượng đầu ra của AI.</p>
               <Button className="mt-6" variant="conversion" size="xl" onClick={() => scrollToRegistration("video")}>Đăng ký ngay <ArrowRight /></Button>
             </div>
@@ -280,7 +288,7 @@ function Index() {
         <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_26rem] lg:items-center">
           <div>
             <span className="inline-flex items-center gap-2 text-sm font-bold uppercase text-primary"><Sparkles className="size-4" /> Bắt đầu hôm nay</span>
-            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink-foreground sm:text-5xl">Đừng chỉ dùng AI.<br />Hãy xây đội ngũ AI của bạn.</h2>
+            <h2 className="font-display mt-4 text-4xl font-bold uppercase leading-tight text-ink-foreground sm:text-6xl">Đừng chỉ dùng AI.<br />Hãy xây đội ngũ AI của bạn.</h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-ink-muted sm:text-lg">Để lại thông tin để giữ chỗ và nhận bộ tài nguyên chuẩn bị trước workshop.</p>
             <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink-muted transition-colors hover:text-primary">
               Xem lại nội dung <ArrowDown className="size-4 rotate-180" />
