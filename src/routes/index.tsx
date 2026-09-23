@@ -79,17 +79,43 @@ const benefits = [
   },
 ];
 
-function scrollToRegistration() {
+function scrollToRegistration(source: string) {
+  void trackEvent("cta_click", { source });
   document.getElementById("dang-ky")?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function Index() {
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const register = useServerFn(submitRegistration);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    void trackEvent("page_view");
+  }, []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const form = new FormData(event.currentTarget);
+    setSaving(true);
+    setFormError(null);
+    try {
+      await register({
+        data: {
+          fullName: String(form.get("name") ?? ""),
+          email: String(form.get("email") ?? ""),
+          phone: String(form.get("phone") ?? ""),
+        },
+      });
+      void trackEvent("registration_submitted");
+      setSubmitted(true);
+    } catch {
+      setFormError("Chưa gửi được thông tin. Bạn vui lòng kiểm tra lại và thử lần nữa.");
+    } finally {
+      setSaving(false);
+    }
   }
+
 
   return (
     <main className="min-h-screen overflow-hidden bg-background pb-20 text-foreground sm:pb-0">
