@@ -19,6 +19,7 @@
  */
 
 @theme inline {
+  --font-sans: "Be Vietnam Pro", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,29 +60,41 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-primary-soft: var(--primary-soft);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-panel: var(--shadow-panel);
+  --shadow-glow: var(--shadow-glow);
+  --shadow-cta: var(--shadow-cta);
+  --shadow-cta-strong: var(--shadow-cta-strong);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.75rem;
+  --background: oklch(0.985 0.008 70);
+  --foreground: oklch(0.16 0.01 60);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.67 0.22 38);
+  --primary-foreground: oklch(0.99 0.005 70);
+  --secondary: oklch(0.95 0.03 68);
+  --secondary-foreground: oklch(0.22 0.02 55);
+  --muted: oklch(0.955 0.008 70);
+  --muted-foreground: oklch(0.48 0.015 55);
+  --accent: oklch(0.93 0.055 62);
+  --accent-foreground: oklch(0.29 0.05 42);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.89 0.018 68);
+  --input: oklch(0.89 0.018 68);
+  --ring: oklch(0.67 0.22 38);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -95,6 +108,18 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --primary-soft: oklch(0.96 0.045 62);
+  --surface: oklch(0.97 0.015 67);
+  --ink: oklch(0.15 0.012 55);
+  --ink-foreground: oklch(0.98 0.006 70);
+  --ink-muted: oklch(0.78 0.015 70);
+  --success: oklch(0.52 0.14 151);
+  --success-soft: oklch(0.95 0.035 151);
+  --shadow-soft: 0 14px 40px -24px oklch(0.25 0.04 50 / 0.28);
+  --shadow-panel: 0 24px 70px -30px oklch(0.12 0.02 50 / 0.38);
+  --shadow-glow: 0 0 0 7px oklch(0.67 0.22 38 / 0.1), 0 20px 50px -20px oklch(0.62 0.22 38 / 0.55);
+  --shadow-cta: 0 12px 26px -12px oklch(0.62 0.22 38 / 0.65);
+  --shadow-cta-strong: 0 16px 30px -10px oklch(0.62 0.22 38 / 0.75);
 }
 
 .dark {
@@ -140,5 +165,55 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  button, a, input { outline-offset: 3px; }
+}
+
+@utility hero-wash {
+  background:
+    radial-gradient(circle at 50% 16%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 38%),
+    var(--background);
+}
+
+@utility registration-band {
+  background:
+    linear-gradient(115deg, color-mix(in oklab, var(--primary) 10%, transparent), transparent 45%),
+    var(--ink);
+}
+
+@utility section-kicker {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+@utility benefit-row {
+  position: relative;
+  transition: background-color 200ms ease, padding 200ms ease;
+  &:hover { background: color-mix(in oklab, var(--primary) 4%, transparent); }
+}
+
+@utility animate-rise {
+  animation: rise 650ms ease-out both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
