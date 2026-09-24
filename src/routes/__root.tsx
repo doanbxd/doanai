@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AI Agent Workshop" },
-      { name: "description", content: "Workshop thực chiến xây dựng đội ngũ AI Agent cho công việc và kinh doanh." },
-      { name: "author", content: "AI Agent Workshop" },
-      { property: "og:title", content: "AI Agent Workshop" },
-      { property: "og:description", content: "Workshop thực chiến xây dựng đội ngũ AI Agent cho công việc và kinh doanh." },
+      { title: "Mua Nhà Không Mất Tiền Oan | BĐS Thiện Nhân Vũng Tàu" },
+      { name: "description", content: "Bộ 5 tài liệu dành cho người mua Bất động sản — trọn bộ 50.000đ." },
+      { name: "author", content: "Xuân Đoàn · BĐS Thiện Nhân Vũng Tàu" },
+      { property: "og:site_name", content: "BĐS Thiện Nhân Vũng Tàu" },
+      { property: "og:title", content: "Mua Nhà Không Mất Tiền Oan | BĐS Thiện Nhân Vũng Tàu" },
+      { property: "og:description", content: "Bộ 5 tài liệu dành cho người mua Bất động sản — trọn bộ 50.000đ." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {

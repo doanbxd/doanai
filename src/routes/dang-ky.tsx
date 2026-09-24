@@ -16,6 +16,9 @@ export const Route = createFileRoute("/dang-ky")({
     meta: [
       { title: "Đăng ký nhận bộ tài liệu | Mua Nhà Không Mất Tiền Oan" },
       { name: "description", content: `Chuyển khoản ${dinhDangTien(SAN_PHAM.gia)} và nhắn Zalo để nhận trọn bộ 5 tài liệu.` },
+      { property: "og:title", content: "Đăng ký nhận bộ tài liệu | Mua Nhà Không Mất Tiền Oan" },
+      { property: "og:image", content: "https://doanai.lovable.app/anh-chia-se.jpg" },
+      { name: "twitter:image", content: "https://doanai.lovable.app/anh-chia-se.jpg" },
     ],
   }),
   component: DangKy,

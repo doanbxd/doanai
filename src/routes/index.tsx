@@ -37,7 +37,13 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: TIEU_DE },
       { property: "og:description", content: MO_TA },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://doanai.lovable.app/" },
+      // Ảnh hiện khi gửi link qua Zalo/Facebook — file public/anh-chia-se.jpg
+      { property: "og:image", content: "https://doanai.lovable.app/anh-chia-se.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://doanai.lovable.app/anh-chia-se.jpg" },
     ],
   }),
   component: Index,
