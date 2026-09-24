@@ -8,8 +8,9 @@ import type { Database } from "@/integrations/supabase/types";
 
 const RegistrationInput = z.object({
   fullName: z.string().min(1).max(120),
-  email: z.string().email(),
+  email: z.string().email().optional().or(z.literal("")),
   phone: z.string().min(6).max(30).optional(),
+  amount: z.number().int().positive().optional(),
 });
 
 function serverSupabase() {
@@ -34,9 +35,11 @@ export const submitRegistration = createServerFn({ method: "POST" })
     const supabase = serverSupabase();
     const { error } = await supabase.from("registrations").insert({
       full_name: data.fullName,
-      email: data.email,
+      email: data.email ?? "",
       phone: data.phone ?? null,
       status: "pending",
+      amount_cents: data.amount ?? null,
+      currency: data.amount ? "VND" : null,
     });
     if (error) throw new Error(error.message);
     return { ok: true as const };
